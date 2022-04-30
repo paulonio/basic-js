@@ -23,9 +23,89 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  let count = 0;
+  let result = [
+    [],
+    [],
+    []
+  ];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let k = 0; k < matrix[i].length; k++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        if (i > 0 && j > 0) {
+          if (matrix[i - 1][j - 1] === true) {
+            count += 1;
+          }
+          if (matrix[i - 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i - 1][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i][j - 1] === true) {
+            count += 1;
+          }
+          if (matrix[i][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j - 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j + 1] === true) {
+            count += 1;
+          }
+        } else if (i === 0 && j > 0) {
+          if (matrix[i][j - 1] === true) {
+            count += 1;
+          }
+          if (matrix[i][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j - 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j + 1] === true) {
+            count += 1;
+          }
+        } else if (i > 0 && j === 0) {
+          if (matrix[i - 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i - 1][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j + 1] === true) {
+            count += 1;
+          }
+        } else {
+          if (matrix[i][j + 1] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j] === true) {
+            count += 1;
+          }
+          if (matrix[i + 1][j + 1] === true) {
+            count += 1;
+          }
+        }
+      }
+      result[i].push(count)
+    }
+  }
+  return result
 }
 
 module.exports = {
