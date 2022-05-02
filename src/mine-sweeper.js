@@ -23,89 +23,33 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(matrix) {
-  let count = 0;
-  let result = [
-    [],
-    [],
-    []
-  ];
-  for (let i = 0; i < matrix.length; i++) {
-    for (let k = 0; k < matrix[i].length; k++) {
-      for (let j = 0; j < matrix[i].length; j++) {
-        if (i > 0 && j > 0) {
-          if (matrix[i - 1][j - 1] === true) {
-            count += 1;
-          }
-          if (matrix[i - 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i - 1][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i][j - 1] === true) {
-            count += 1;
-          }
-          if (matrix[i][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j - 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j + 1] === true) {
-            count += 1;
-          }
-        } else if (i === 0 && j > 0) {
-          if (matrix[i][j - 1] === true) {
-            count += 1;
-          }
-          if (matrix[i][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j - 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j + 1] === true) {
-            count += 1;
-          }
-        } else if (i > 0 && j === 0) {
-          if (matrix[i - 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i - 1][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j + 1] === true) {
-            count += 1;
-          }
-        } else {
-          if (matrix[i][j + 1] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j] === true) {
-            count += 1;
-          }
-          if (matrix[i + 1][j + 1] === true) {
-            count += 1;
-          }
-        }
+ function minesweeper(matrix) {
+  return matrix.map((row, rowIndex, matrix) => {
+    let count = 0;
+    const newRow = row.map((elem, index, array) => {
+      count = 0
+      
+      array[index - 1] && count++
+
+      if(rowIndex - 1 >= 0) {
+        matrix[rowIndex - 1][index - 1] && count++
+        matrix[rowIndex - 1][index] && count++         
+        matrix[rowIndex - 1][index + 1] && count++
       }
-      result[i].push(count)
-    }
-  }
-  return result
+    
+      array[index + 1] && count++
+
+      if(rowIndex + 1 < matrix.length) {          
+        matrix[rowIndex + 1][index - 1] && count++
+        matrix[rowIndex + 1][index] && count++
+        matrix[rowIndex + 1][index + 1] && count++
+      }
+    
+      return count
+    })
+    
+    return newRow
+  })
 }
 
 module.exports = {
